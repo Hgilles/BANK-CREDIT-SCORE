@@ -11,8 +11,8 @@ with zipfile.ZipFile(chemin_zip, 'r') as zip_ref:
 
 import pandas as pd
 df=pd.read_csv('predictions/train_credit_score.csv')
-dfb=df.drop_duplicates(subset=['Name'])
-dfa=dfb.drop('ID', axis=1)
+df=df.drop('Month', axis=1)
+dfa=df.drop('ID', axis=1)
 dfa=dfa.drop('Customer_ID', axis=1)
 dfa=dfa.drop('Name', axis=1)
 dfa=dfa.drop('SSN', axis=1)
@@ -45,7 +45,7 @@ st.header('BIENVENU SUR LA PAGE DE PREDICTION DE CLIENTS SOLVABLES!PROTOTYPE par
 lang=st.radio('Dans quelle langue souhaitez-vous exécuter le programme?',('francais(par défaut)','English'))
 
 if lang=='francais(par défaut)':
-    Month=st.number_input('Entrez la durée du pret en mois: ')
+    
     Age=st.number_input('Entrez l_age du client: ')
     Annual_Income=st.number_input('Entrez le salaire annuel du client: ')
     Monthly_Inhand_Salary=st.number_input('Entrez son salaire mensuel')
@@ -70,7 +70,7 @@ if lang=='francais(par défaut)':
     elif Credit_Mix=='Mauvaise':
         Credit_Mix=0
 
-    x=np.array([Month,Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,17)
+    x=np.array([Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,16)
     y=rfc.predict(x)
 
     if(st.button('Prédire la solvabilité du client')):
@@ -81,7 +81,7 @@ if lang=='francais(par défaut)':
         elif y==2:
             st.text('La prédiction est bonne pour ce client, Il est solvable!')
 elif lang=="English":
-    Month=st.number_input('Enter loan duration(in month): ')
+    
     Age=st.number_input('Entrer Customer_s age: ')
     Annual_Income=st.number_input('Enter annual income: ')
     Monthly_Inhand_Salary=st.number_input('Enter monthly inhand salary')
@@ -106,7 +106,7 @@ elif lang=="English":
     elif Credit_Mix=='Bad':
         Credit_Mix=0
 
-    x=np.array([Month,Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,17)
+    x=np.array([Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,16)
     y=rfc.predict(x)
 
     if(st.button('Predict')):

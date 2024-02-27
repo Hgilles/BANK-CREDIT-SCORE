@@ -1,6 +1,10 @@
 import streamlit as st 
 import numpy as np
-from predicction import predict
+#from predicction import predict
+
+import joblib 
+rfc=joblib.load('rf_model.joblib')
+
 st.header('BIENVENU SUR LA PAGE DE PREDICTION DE CLIENTS SOLVABLES!PROTOTYPE par HOUNME HOUETO EMERICK GILLES')
 
 lang=st.radio('Dans quelle langue souhaitez-vous exécuter le programme?',('francais(par défaut)','English'))
@@ -32,7 +36,7 @@ if lang=='francais(par défaut)':
         Credit_Mix=0
 
     x=np.array([Month,Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,17)
-    y=predict(x)
+    y=rfc.predict(x)
 
     if(st.button('Prédire la solvabilité du client')):
         if y==0:
@@ -68,7 +72,7 @@ elif lang=="English":
         Credit_Mix=0
 
     x=np.array([Month,Age,Annual_Income,Monthly_Inhand_Salary,Num_Bank_Accounts,Num_Credit_Card,Interest_Rate,Num_of_Loan,Num_of_Delayed_Payment,Num_Credit_Inquiries,Credit_Mix,Outstanding_Debt,Credit_Utilization_Ratio,Credit_History_Age,Total_EMI_per_month,Amount_invested_monthly,Monthly_Balance]).reshape(1,17)
-    y=predict(x)
+    y=rfc.predict(x)
 
     if(st.button('Predict')):
         if y==0:
